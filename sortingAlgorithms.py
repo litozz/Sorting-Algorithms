@@ -5,8 +5,8 @@ import random
 
 def burbuja(m):
 	for i in xrange(len(m)):
-		for j in xrange(len(m)):
-			if(m[i]<m[j]):
+		for j in xrange(i+1,len(m)):
+			if(m[i]>m[j]):
 				aux=m[i]
 				m[i]=m[j]
 				m[j]=aux
@@ -140,6 +140,8 @@ def mergeSort(v,izquierda,derecha,prof):
 
 
 
+
+
 #PUEDES PROBAR SI QUIERES INDEPENDIENTEMENTE LA PARTE DE PIVOTAR, SI TE FIJAS, EL CÓDIGO DONDE PONE EL TRUCO DEL ALMENDRUCO, ES EL MISMO
 #QUE LA FUNCIÓN PIVOTEOLINEAL(), 
 
@@ -151,6 +153,6 @@ if (__name__=="__main__"):
 	for i in range(CUANTOS):
 		m.append(i+1)
 	random.shuffle(m)
-	#m=burbuja(m) #--> No obtiene respuesta en 10 minutos para 1000000 elementos; 10.6 segundos para 10000 elementos 
+	m=burbuja(m) #--> No obtiene respuesta en 10 minutos para 1000000 elementos; 10.6 segundos para 10000 elementos 
 	#m=quickSort(m,0,len(m)-1,0) #--> 6.2 segundos con 1000000 elementos
 	#m=mergeSort(m,0,len(m)-1,0) # --> 8 segundos con 1000000 elementos
