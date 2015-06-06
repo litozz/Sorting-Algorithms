@@ -49,6 +49,7 @@ def quickSort(v,izquierda,derecha,prof):
 	else:
 		#print ("\t"*prof+"V: {}".format(v))
 		######################  EL TRUCO DEL ALMENDRUCO: PIVOTAR EL VECTOR  ######################
+		pos_pivote=(izquierda+derecha)/2#Calculamos la posicion del pivote (Si los elementos se repiten, hará falta.)
 		pivote=v[(izquierda+derecha)/2] #Se calcula ¡¡SOLO EL VALOR!! (no su posición) del pivote en base a las posiciones derecha e izquierda
 		while(izquierda < derecha): #Mientras que los punteros izquierda (principio) y derecha (final) no se crucen:
 			while(v[izquierda]<pivote): #Buscamos el siguiente elemento MAYOR que el pivote desde la izquierda
@@ -59,9 +60,14 @@ def quickSort(v,izquierda,derecha,prof):
 			#Fíjate que si el vector está ordenado (alguien nos trolea), izquierda y derecha podrían cruzarse, 
 			#por lo que hay que comprobar de nuevo si izquierda y derecha siguen siendo iguales. 
 			if(izquierda<derecha):
+				if(izquierda==pos_pivote): #El pivote se va a mover a la posicion derecha
+					pos_pivote=derecha
+				elif(derecha==pos_pivote): #El pivote se va a mover a la posicion izquierda
+					pos_pivote=izquierda
 				aux=v[izquierda]
 				v[izquierda]=v[derecha]
 				v[derecha]=aux
+				izquierda=izquierda+1 #Aumentamos izquierda o decrementamos derecha arbitrariamente, hay que avanzar una de las posiciones para evitar cuelgues
 		##########################################################################################
 #############################################################################################################################################
 #	Un poco de álgebra para saber cuántos elementos hay en un intervalo:																	#
@@ -83,8 +89,8 @@ def quickSort(v,izquierda,derecha,prof):
 #############################################################################################################################################
 		#Ahora procedemos a trocear el vector en dos partes: lo que está a la izquierda del pivote y 
 		#lo que está a la derecha del mismo SIN INCLUIRLO!!
-		v_izq=quickSort(v[0:(izquierda+derecha)/2],0,((izquierda+derecha)/2)-1,prof+1) #Ordeno la parte izquierda de forma independiente
-		v_der=quickSort(v[((izquierda+derecha)/2)+1:len(v)],0,(len(v)-1)-(((izquierda+derecha)/2)+1),prof+1) #Ordeno la parte derecha de forma independiente
+		v_izq=quickSort(v[0:pos_pivote],0,pos_pivote-1,prof+1) #Ordeno la parte izquierda de forma independiente
+		v_der=quickSort(v[pos_pivote+1:len(v)],0,len(v)-pos_pivote-3,prof+1) #Ordeno la parte derecha de forma independiente
 		#(Le pongo -1+1 para que se entienda cómo he calculado el intervalo con la regla de arriba)
 		lpivote=[pivote] #Añado el pivote a un vector para poder concatenarlo (capricho de Python)
 		return v_izq+lpivote+v_der #El resultado será la concatenacion de la parte izquierda (menores que el pivote) ordenada,
@@ -148,11 +154,11 @@ def mergeSort(v,izquierda,derecha,prof):
 
 if (__name__=="__main__"):
 	#m=[5,89,35,14,24,15,37,13,20,7,70]
-	CUANTOS=10000
+	CUANTOS=1000000
 	m=[]
 	for i in range(CUANTOS):
 		m.append(i+1)
 	random.shuffle(m)
-	m=burbuja(m) #--> No obtiene respuesta en 10 minutos para 1000000 elementos; 10.6 segundos para 10000 elementos 
-	#m=quickSort(m,0,len(m)-1,0) #--> 6.2 segundos con 1000000 elementos
+	#m=burbuja(m) #--> No obtiene respuesta en 10 minutos para 1000000 elementos; 10.6 segundos para 10000 elementos 
+	m=quickSort(m,0,len(m)-1,0) #--> 6.2 segundos con 1000000 elementos
 	#m=mergeSort(m,0,len(m)-1,0) # --> 8 segundos con 1000000 elementos
