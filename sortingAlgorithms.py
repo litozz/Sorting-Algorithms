@@ -19,9 +19,9 @@ def pivoteoLineal(v,izquierda,derecha):
 	pos_pivote=(izquierda+derecha)/2
 	pivote=v[(izquierda+derecha)/2] 
 	while(izquierda < derecha):
-		while(v[izquierda]<=pivote and izquierda<pos_pivote):
+		while(v[izquierda]<pivote and izquierda<pos_pivote):
 			izquierda=izquierda+1
-		while(v[derecha]>=pivote and derecha>pos_pivote):
+		while(v[derecha]>pivote and derecha>pos_pivote):
 			derecha=derecha-1
 		if(izquierda<derecha):
 			aux=v[izquierda]
