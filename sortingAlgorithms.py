@@ -16,20 +16,23 @@ def burbuja(m):
 #Esta es la parte magica del quickSort: Buscar el pivote, dejar los menores que el pivote a la izquierda y los mayores a la derecha.
 #Insisto que el pivoteo solo deja a izquierda y derecha los menores y mayores respectivamente. No tiene por qué dejar el vector ordenado.
 def pivoteoLineal(v,izquierda,derecha):
-	pivote=v[(izquierda+derecha)/2]#Se calcula ¡¡SOLO EL VALOR!! (no su posición) del pivote en base a las posiciones derecha e izquierda
-	print("El pivote es: {} y está en la posición: {}".format(pivote,(izquierda+derecha)/2))
-	while(izquierda < derecha):#Mientras que los punteros izquierda (principio) y derecha (final) no se crucen:
-		while(v[izquierda]<pivote):#Buscamos el siguiente elemento MAYOR que el pivote desde la izquierda
+	pos_pivote=(izquierda+derecha)/2
+	pivote=v[(izquierda+derecha)/2] 
+	while(izquierda < derecha):
+		while(v[izquierda]<=pivote and izquierda<pos_pivote):
 			izquierda=izquierda+1
-		while(v[derecha]>pivote):#Buscamos el siguiente elemento MENOR que el pivote desde la derecha
+		while(v[derecha]>=pivote and derecha>pos_pivote):
 			derecha=derecha-1
-		#Una vez hemos encontrado elementos que cumplan las restricciones anteriores procedemos a intercambiarlos (un swap de toda la vida)
-		#Fíjate que si el vector está ordenado (alguien nos trolea), izquierda y derecha podrían cruzarse, 
-		#por lo que hay que comprobar de nuevo si izquierda y derecha siguen siendo iguales. 
 		if(izquierda<derecha):
 			aux=v[izquierda]
 			v[izquierda]=v[derecha]
 			v[derecha]=aux
+			if(izquierda==pos_pivote):
+				pos_pivote=derecha
+				izquierda=izquierda+1
+			elif(derecha==pos_pivote):
+				pos_pivote=izquierda
+				derecha=derecha-1
 	return v
 
 
